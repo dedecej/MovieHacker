@@ -2,8 +2,8 @@
 //  MovieDetailViewController.swift
 //  MovieHacker
 //
-//  Created by Jan Dědeček on 13/08/2017.
-//  Copyright © 2017 Jan Dědeček. All rights reserved.
+//  Created by Jan Dědeček and Tomaš Novella on 13/08/2017.
+//  Copyright © 2017 Jan Dědeček and Tomaš Novella. All rights reserved.
 //
 
 import UIKit
@@ -17,10 +17,8 @@ class MovieDetailViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    // Do any additional setup after loading the view.
     if let movie = movie {
-      //movieImageView.
+      // Display detail of the current movie
       navigationItem.title = movie.title
       movieDescriptionLabel?.text = movie.overview
 

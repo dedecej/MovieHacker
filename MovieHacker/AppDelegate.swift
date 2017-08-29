@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  MovieHacker
 //
-//  Created by Jan Dědeček on 07/08/2017.
-//  Copyright © 2017 Jan Dědeček. All rights reserved.
+//  Created by Jan Dědeček and Tomaš Novella on 07/08/2017.
+//  Copyright © 2017 Jan Dědeček and Tomaš Novella. All rights reserved.
 //
 
 import UIKit
@@ -40,7 +40,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationWillTerminate(_ application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
   }
-
-
 }
 

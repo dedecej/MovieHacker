@@ -2,14 +2,16 @@
 //  ImageCache.swift
 //  MovieHacker
 //
-//  Created by Jan Dědeček on 13/08/2017.
-//  Copyright © 2017 Jan Dědeček. All rights reserved.
+//  Created by Jan Dědeček and Tomaš Novella on 13/08/2017.
+//  Copyright © 2017 Jan Dědeček and Tomaš Novella. All rights reserved.
 //
 
 import UIKit
 
+// Fetched image cache
 private let imageCache = NSCache<NSString, UIImage>()
 
+// Storage of currently performing tasks and theirs completion listeners
 private var tasks = [URL: (URLSessionDataTask, [(UIImage?) -> Void])]()
 
 func image(from url: URL) -> UIImage? {
@@ -17,18 +19,19 @@ func image(from url: URL) -> UIImage? {
 }
 
 func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
+  // Try to fetch image from the cache
   if let image = imageCache.object(forKey: url.absoluteString as NSString) {
     completion(image)
     return
   }
 
+  // Assign to completion listener into waiters queue
   if tasks[url] != nil {
     tasks[url]?.1.append(completion)
     return
   }
 
-  print("Loading \(url)")
-
+  // Fetch new requested image
   let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
     let image: UIImage?
     if (response as? HTTPURLResponse)?.statusCode == 200,
@@ -42,6 +45,7 @@ func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
 
     DispatchQueue.main.async {
       if let task = tasks[url] {
+        // Store image into cache and execute waiting listeners
         if let image = image {
           imageCache.setObject(image, forKey: url.absoluteString as NSString)
         }
@@ -53,6 +57,7 @@ func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
     }
   }
 
+  // Start the task
   task.resume()
   tasks[url] = (task, [completion])
 }
