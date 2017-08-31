@@ -31,7 +31,9 @@ func loadImage(from url: URL, completion: @escaping (UIImage?) -> Void) {
     return
   }
 
-  // Fetch new requested image
+  // We're fetching data, callback is invoked in some background thread. 
+  // UI is not thread-safe and can only be manipulated from the main thread. 
+  // Therefore we will use dispatch queues from GCD to ensure that the critical code run on main thread.
   let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
     let image: UIImage?
     if (response as? HTTPURLResponse)?.statusCode == 200,

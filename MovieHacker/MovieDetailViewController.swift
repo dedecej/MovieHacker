@@ -12,8 +12,8 @@ class MovieDetailViewController: UIViewController {
 
   var movie: Movie?
 
-  @IBOutlet weak var movieImageView: UIImageView?
-  @IBOutlet weak var movieDescriptionLabel: UILabel?
+  @IBOutlet var movieImageView: UIImageView?
+  @IBOutlet var movieDescriptionLabel: UILabel?
 
   override func viewDidLoad() {
     super.viewDidLoad()
