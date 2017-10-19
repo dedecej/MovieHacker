@@ -32,12 +32,10 @@ class TableViewController: UITableViewController {
     // Fetch movies from the server
     task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
       // Parse JSON into array of movies
-      if let data = data,
-        let json = try? JSONSerialization.jsonObject(with: data),
-        let model = parse(json: json) {
+      if let data = data, let query = try? decoder.decode(MovieQueryResults.self, from: data) {
         DispatchQueue.main.async {
           // Set the model and reload table's content
-          self?.model = model
+          self?.model = query.results
           // This (UI) task must be performed on main thread
           self?.tableView.reloadData()
         }
